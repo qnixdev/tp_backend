@@ -53,7 +53,7 @@ public class TradeLot {
     private String owner;
 
     @OneToOne(targetEntity = TradeItemReferenceData.class, mappedBy = "lot", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-    private TradeItemReferenceData referenceData;
+    private TradeItemReferenceData referenceData = null;
 
     @OneToMany(targetEntity = TradeLotPosition.class, mappedBy = "lot")
     @OrderBy("numberPosition ASC")
@@ -65,7 +65,7 @@ public class TradeLot {
 
     @OneToOne(targetEntity = TradeLotBet.class)
     @JoinColumn(name = "id_best_bet", referencedColumnName = "id")
-    private TradeLotBet bestBet;
+    private TradeLotBet bestBet = null;
 
     public TradeLot() {
         this.bets = new ArrayList<>();

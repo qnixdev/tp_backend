@@ -4,9 +4,9 @@
 CREATE TABLE address (
     id UUID NOT NULL,
     id_organization UUID NOT NULL,
-    id_country UUID NOT NULL,
-    region_id UUID DEFAULT NULL,
     type VARCHAR(63) NOT NULL,
+    id_country UUID NOT NULL,
+    id_region UUID DEFAULT NULL,
     city VARCHAR(127) DEFAULT NULL,
     district VARCHAR(127) DEFAULT NULL,
     street VARCHAR(127) DEFAULT NULL,
@@ -18,11 +18,11 @@ CREATE TABLE address (
 );
 CREATE INDEX IDX_D4E6F81E22F160E ON address (id_organization);
 CREATE INDEX IDX_D4E6F818DEE6016 ON address (id_country);
-CREATE INDEX IDX_D4E6F8198260155 ON address (region_id);
+CREATE INDEX IDX_D4E6F8198260155 ON address (id_region);
 COMMENT ON COLUMN address.id IS '(DC2Type:uuid)';
 COMMENT ON COLUMN address.id_organization IS '(DC2Type:uuid)';
 COMMENT ON COLUMN address.id_country IS '(DC2Type:uuid)';
-COMMENT ON COLUMN address.region_id IS '(DC2Type:uuid)';
+COMMENT ON COLUMN address.id_region IS '(DC2Type:uuid)';
 
 
 --
@@ -112,7 +112,7 @@ COMMENT ON COLUMN contact_info.id_organization IS '(DC2Type:uuid)';
 CREATE TABLE country (
     id UUID NOT NULL,
     name VARCHAR(63) NOT NULL,
-    alpha2_code VARCHAR(3) NOT NULL,
+    alpha2_code VARCHAR(7) NOT NULL,
     PRIMARY KEY(id)
 );
 COMMENT ON COLUMN country.id IS '(DC2Type:uuid)';
@@ -297,13 +297,13 @@ COMMENT ON COLUMN measure.id IS '(DC2Type:uuid)';
 CREATE TABLE organization (
     id UUID NOT NULL,
     id_created_user UUID DEFAULT NULL,
-    id_business_form UUID DEFAULT NULL,
-    id_ownership UUID DEFAULT NULL,
-    id_taxation_type UUID DEFAULT NULL,
     status VARCHAR(63) NOT NULL,
     name VARCHAR(255) NOT NULL,
     usreou VARCHAR(63) NOT NULL,
     is_resident BOOLEAN NOT NULL,
+    id_business_form UUID DEFAULT NULL,
+    id_ownership UUID DEFAULT NULL,
+    id_taxation_type UUID DEFAULT NULL,
     pdv VARCHAR(63) DEFAULT NULL,
     date_created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     date_updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL,
@@ -343,13 +343,13 @@ COMMENT ON COLUMN organizations_employees.id_employee IS '(DC2Type:uuid)';
 --
 CREATE TABLE organizations_categories (
     id_organization UUID NOT NULL,
-    id_employee UUID NOT NULL,
-    PRIMARY KEY(id_organization, id_employee)
+    id_category UUID NOT NULL,
+    PRIMARY KEY(id_organization, id_category)
 );
 CREATE INDEX IDX_74DF8412E22F160E ON organizations_categories (id_organization);
-CREATE INDEX IDX_74DF8412D449934 ON organizations_categories (id_employee);
+CREATE INDEX IDX_74DF8412D449934 ON organizations_categories (id_category);
 COMMENT ON COLUMN organizations_categories.id_organization IS '(DC2Type:uuid)';
-COMMENT ON COLUMN organizations_categories.id_employee IS '(DC2Type:uuid)';
+COMMENT ON COLUMN organizations_categories.id_category IS '(DC2Type:uuid)';
 
 
 --
@@ -370,6 +370,7 @@ COMMENT ON COLUMN ownership.id IS '(DC2Type:uuid)';
 CREATE TABLE phone (
     id UUID NOT NULL,
     id_customer UUID NOT NULL,
+    phone VARCHAR(63) NOT NULL,
     PRIMARY KEY(id)
 );
 CREATE INDEX IDX_444F97DDD1E2629C ON phone (id_customer);
@@ -477,13 +478,12 @@ CREATE TABLE trade (
     id_created_user UUID DEFAULT NULL,
     id_created_customer UUID DEFAULT NULL,
     id_created_organization UUID DEFAULT NULL,
+    status VARCHAR(63) NOT NULL,
+    title VARCHAR(511) NOT NULL,
     id_category UUID NOT NULL,
     id_trade_type UUID NOT NULL,
     id_trade_model UUID NOT NULL,
     id_trade_specification UUID NOT NULL,
-    id_region UUID NOT NULL,
-    status VARCHAR(63) NOT NULL,
-    title VARCHAR(511) NOT NULL,
     step DOUBLE PRECISION NOT NULL,
     quarter SMALLINT NOT NULL,
     date_offer_start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
@@ -495,6 +495,7 @@ CREATE TABLE trade (
     commission DOUBLE PRECISION DEFAULT NULL,
     commission_agent DOUBLE PRECISION DEFAULT NULL,
     is_auto_change_status BOOLEAN NOT NULL,
+    id_region UUID DEFAULT NULL,
     date_created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     date_updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL,
     date_deleted_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL,
@@ -541,7 +542,7 @@ CREATE TABLE trade_item_reference_data (
     id_trade UUID NOT NULL,
     id_lot UUID DEFAULT NULL,
     id_position UUID DEFAULT NULL,
-    id_measure UUID DEFAULT NULL,
+    id_measure UUID NOT NULL,
     id_species UUID DEFAULT NULL,
     id_assortment UUID DEFAULT NULL,
     id_quality_class UUID DEFAULT NULL,
@@ -591,7 +592,6 @@ COMMENT ON COLUMN trade_item_reference_data.id_delivery_terms IS '(DC2Type:uuid)
 CREATE TABLE trade_lot (
     id UUID NOT NULL,
     id_trade UUID NOT NULL,
-    id_best_bet UUID DEFAULT NULL,
     name VARCHAR(255) NOT NULL,
     clarification VARCHAR(511) DEFAULT NULL,
     quantity INT DEFAULT NULL,
@@ -602,6 +602,7 @@ CREATE TABLE trade_lot (
     price DOUBLE PRECISION DEFAULT NULL,
     cost DOUBLE PRECISION NOT NULL,
     owner VARCHAR(255) NOT NULL,
+    id_best_bet UUID DEFAULT NULL,
     PRIMARY KEY(id)
 );
 CREATE INDEX IDX_2DEB0D47909F0256 ON trade_lot (id_trade);
@@ -731,9 +732,9 @@ COMMENT ON COLUMN trade_type.id IS '(DC2Type:uuid)';
 --
 CREATE TABLE "user" (
     id UUID NOT NULL,
-    created_user_id UUID DEFAULT NULL,
+    id_created_user UUID DEFAULT NULL,
     status VARCHAR(63) NOT NULL,
-    email VARCHAR(63) NOT NULL,
+    email VARCHAR(255) NOT NULL,
     password VARCHAR(255) DEFAULT NULL,
     api_token VARCHAR(255) DEFAULT NULL,
     is_blocked BOOLEAN NOT NULL,
@@ -746,9 +747,9 @@ CREATE TABLE "user" (
 );
 CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON "user" (email);
 CREATE UNIQUE INDEX UNIQ_8D93D6497BA2F5EB ON "user" (api_token);
-CREATE INDEX IDX_8D93D649E104C1D3 ON "user" (created_user_id);
+CREATE INDEX IDX_8D93D649E104C1D3 ON "user" (id_created_user);
 COMMENT ON COLUMN "user".id IS '(DC2Type:uuid)';
-COMMENT ON COLUMN "user".created_user_id IS '(DC2Type:uuid)';
+COMMENT ON COLUMN "user".id_created_user IS '(DC2Type:uuid)';
 
 
 --
@@ -795,7 +796,7 @@ COMMENT ON COLUMN width.id IS '(DC2Type:uuid)';
 
 ALTER TABLE address ADD CONSTRAINT FK_D4E6F81E22F160E FOREIGN KEY (id_organization) REFERENCES organization (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE address ADD CONSTRAINT FK_D4E6F818DEE6016 FOREIGN KEY (id_country) REFERENCES country (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
-ALTER TABLE address ADD CONSTRAINT FK_D4E6F8198260155 FOREIGN KEY (region_id) REFERENCES region (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE address ADD CONSTRAINT FK_D4E6F8198260155 FOREIGN KEY (id_region) REFERENCES region (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE bank_info ADD CONSTRAINT FK_61E963D9E22F160E FOREIGN KEY (id_organization) REFERENCES organization (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE bank_info ADD CONSTRAINT FK_61E963D9398D64AA FOREIGN KEY (id_currency) REFERENCES currency (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE contact_info ADD CONSTRAINT FK_E376B3A8E22F160E FOREIGN KEY (id_organization) REFERENCES organization (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
@@ -811,7 +812,7 @@ ALTER TABLE organization ADD CONSTRAINT FK_C1EE637C3810D62A FOREIGN KEY (id_taxa
 ALTER TABLE organizations_employees ADD CONSTRAINT FK_92C3EDE2E22F160E FOREIGN KEY (id_organization) REFERENCES organization (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE organizations_employees ADD CONSTRAINT FK_92C3EDE2D449934 FOREIGN KEY (id_employee) REFERENCES employee (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE organizations_categories ADD CONSTRAINT FK_74DF8412E22F160E FOREIGN KEY (id_organization) REFERENCES organization (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
-ALTER TABLE organizations_categories ADD CONSTRAINT FK_74DF8412D449934 FOREIGN KEY (id_employee) REFERENCES category (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE organizations_categories ADD CONSTRAINT FK_74DF8412D449934 FOREIGN KEY (id_category) REFERENCES category (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE phone ADD CONSTRAINT FK_444F97DDD1E2629C FOREIGN KEY (id_customer) REFERENCES customer (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE region ADD CONSTRAINT FK_F62F1768DEE6016 FOREIGN KEY (id_country) REFERENCES country (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE groups_roles ADD CONSTRAINT FK_E79D4963834505F5 FOREIGN KEY (id_group) REFERENCES security_group (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
@@ -851,6 +852,6 @@ ALTER TABLE trade_request ADD CONSTRAINT FK_C817D769909F0256 FOREIGN KEY (id_tra
 ALTER TABLE trade_request ADD CONSTRAINT FK_C817D7699525C141 FOREIGN KEY (id_lot) REFERENCES trade_lot (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE trade_request ADD CONSTRAINT FK_C817D769CF8DA6E6 FOREIGN KEY (id_participant) REFERENCES organization (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE trade_request ADD CONSTRAINT FK_C817D769D1E2629C FOREIGN KEY (id_customer) REFERENCES customer (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
-ALTER TABLE "user" ADD CONSTRAINT FK_8D93D649E104C1D3 FOREIGN KEY (created_user_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE "user" ADD CONSTRAINT FK_8D93D649E104C1D3 FOREIGN KEY (id_created_user) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE users_security_groups ADD CONSTRAINT FK_7DF730FF6B3CA4B FOREIGN KEY (id_user) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE users_security_groups ADD CONSTRAINT FK_7DF730FFBC1A1A69 FOREIGN KEY (id_security_group) REFERENCES security_group (id) NOT DEFERRABLE INITIALLY IMMEDIATE;

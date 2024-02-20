@@ -30,46 +30,46 @@ public class TradeItemReferenceData {
     private TradeLotPosition position;
 
     @ManyToOne(targetEntity = Measure.class)
-    @JoinColumn(name = "id_measure", referencedColumnName = "id")
+    @JoinColumn(name = "id_measure", referencedColumnName = "id", nullable = false)
     private Measure measure;
 
     @ManyToOne(targetEntity = Species.class)
     @JoinColumn(name = "id_species", referencedColumnName = "id")
-    private Species species;
+    private Species species = null;
 
     @ManyToOne(targetEntity = Assortment.class)
     @JoinColumn(name = "id_assortment", referencedColumnName = "id")
-    private Assortment assortment;
+    private Assortment assortment = null;
 
     @ManyToOne(targetEntity = QualityClass.class)
     @JoinColumn(name = "id_quality_class", referencedColumnName = "id")
-    private QualityClass qualityClass;
+    private QualityClass qualityClass = null;
 
     @ManyToOne(targetEntity = Warehouse.class)
     @JoinColumn(name = "id_warehouse", referencedColumnName = "id")
-    private Warehouse warehouse;
+    private Warehouse warehouse = null;
 
     @ManyToOne(targetEntity = Diameter.class)
     @JoinColumn(name = "id_diameter", referencedColumnName = "id")
-    private Diameter diameter;
+    private Diameter diameter = null;
 
     @ManyToOne(targetEntity = Length.class)
     @JoinColumn(name = "id_length", referencedColumnName = "id")
-    private Length length;
+    private Length length = null;
 
     @ManyToOne(targetEntity = Width.class)
     @JoinColumn(name = "id_width", referencedColumnName = "id")
-    private Width width;
+    private Width width = null;
 
     @ManyToOne(targetEntity = Height.class)
     @JoinColumn(name = "id_height", referencedColumnName = "id")
-    private Height height;
+    private Height height = null;
 
     @ManyToOne(targetEntity = Humidity.class)
     @JoinColumn(name = "id_humidity", referencedColumnName = "id")
-    private Humidity humidity;
+    private Humidity humidity = null;
 
     @ManyToOne(targetEntity = DeliveryTerms.class)
     @JoinColumn(name = "id_delivery_terms", referencedColumnName = "id")
-    private DeliveryTerms deliveryTerms;
+    private DeliveryTerms deliveryTerms = null;
 }

@@ -42,15 +42,15 @@ public class Trade {
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "id_created_user", referencedColumnName = "id")
-    private User createdUser;
+    private User createdUser = null;
 
     @ManyToOne(targetEntity = Customer.class)
     @JoinColumn(name = "id_created_customer", referencedColumnName = "id")
-    private Customer createdCustomer;
+    private Customer createdCustomer = null;
 
     @ManyToOne(targetEntity = Organization.class)
     @JoinColumn(name = "id_created_organization", referencedColumnName = "id")
-    private Organization createdOrganization;
+    private Organization createdOrganization = null;
 
     @Column(name = "status", length = 63, nullable = false)
     @Enumerated(EnumType.STRING)
@@ -110,7 +110,7 @@ public class Trade {
 
     @ManyToOne(targetEntity = Region.class)
     @JoinColumn(name = "id_region", referencedColumnName = "id")
-    private Region region;
+    private Region region = null;
 
     @Column(name = "date_created_at", nullable = false)
     private Date dateCreatedAt;

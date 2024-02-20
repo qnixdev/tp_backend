@@ -22,7 +22,7 @@ public class Country {
     @Column(name = "name", length = 63, nullable = false)
     private String name;
 
-    @Column(name = "alpha2_code", length = 3, nullable = false)
+    @Column(name = "alpha2_code", length = 7, nullable = false)
     private String alpha2Code;
 
     @OneToMany(targetEntity = Region.class, mappedBy = "country")

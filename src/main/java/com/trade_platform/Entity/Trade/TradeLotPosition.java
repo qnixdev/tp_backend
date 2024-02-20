@@ -49,7 +49,7 @@ public class TradeLotPosition {
     private String owner;
 
     @OneToOne(targetEntity = TradeItemReferenceData.class, mappedBy = "position", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-    private TradeItemReferenceData referenceData;
+    private TradeItemReferenceData referenceData = null;
 
     @PreUpdate
     public void preUpdate() {

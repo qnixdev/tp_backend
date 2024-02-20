@@ -18,7 +18,7 @@ public class User {
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "id_created_user", referencedColumnName = "id")
-    private User createdUser;
+    private User createdUser = null;
 
     @Column(name = "status", length = 63, nullable = false)
     @Enumerated(EnumType.STRING)
