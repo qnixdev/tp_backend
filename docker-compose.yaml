@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  tp_postgresql:
+    container_name: tp-database
+    image: postgres:13.3
+    ports:
+      - '49161:5432'
+    volumes:
+      - ./docker/data/postgresql:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=q1w2e3r4
+      - POSTGRES_DB=tp.local
+    networks:
+      - tp_ntwrk
+
+volumes:
+  tp_postgresql:
+
+networks:
+  tp_ntwrk:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.8.0.0/16
+          gateway: 10.8.0.1
