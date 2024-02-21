@@ -13,3 +13,8 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
+  mvc:
+    servlet:
+      path: /api/v1
+  jackson:
+    property-naming-strategy: SNAKE_CASE
