@@ -25,4 +25,12 @@ public class SecurityRole {
 
     @ManyToMany(targetEntity = SecurityGroup.class, mappedBy = "securityRoles")
     private Set<SecurityGroup> securityGroups;
+
+    public void addSecurityGroup(SecurityGroup securityGroup) {
+        this.securityGroups.add(securityGroup);
+    }
+
+    public void removeSecurityGroup(SecurityGroup securityGroup) {
+        this.securityGroups.remove(securityGroup);
+    }
 }

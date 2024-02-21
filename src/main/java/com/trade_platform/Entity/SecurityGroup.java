@@ -40,4 +40,33 @@ public class SecurityGroup {
 
     @ManyToMany(targetEntity = User.class, mappedBy = "securityGroups")
     private Set<User> users;
+
+    public void addSecurityRole(SecurityRole securityRole) {
+        if (!this.securityRoles.contains(securityRole)) {
+            this.securityRoles.add(securityRole);
+            securityRole.addSecurityGroup(this);
+        }
+    }
+
+    public void removeSecurityRole(SecurityRole securityRole) {
+        if (this.securityRoles.remove(securityRole)) {
+            securityRole.removeSecurityGroup(this);
+        }
+    }
+
+    public void addCustomer(Customer customer) {
+        this.customers.add(customer);
+    }
+
+    public void removeCustomer(Customer customer) {
+        this.customers.remove(customer);
+    }
+
+    public void addUser(User user) {
+        this.users.add(user);
+    }
+
+    public void removeUser(User user) {
+        this.users.remove(user);
+    }
 }

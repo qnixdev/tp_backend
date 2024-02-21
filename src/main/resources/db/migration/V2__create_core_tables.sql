@@ -325,20 +325,6 @@ COMMENT ON COLUMN organization.id_taxation_type IS '(DC2Type:uuid)';
 
 
 --
--- Name: organizations_employees; Type: TABLE; Schema: public
---
-CREATE TABLE organizations_employees (
-    id_organization UUID NOT NULL,
-    id_employee UUID NOT NULL,
-    PRIMARY KEY(id_organization, id_employee)
-);
-CREATE INDEX IDX_92C3EDE2E22F160E ON organizations_employees (id_organization);
-CREATE INDEX IDX_92C3EDE2D449934 ON organizations_employees (id_employee);
-COMMENT ON COLUMN organizations_employees.id_organization IS '(DC2Type:uuid)';
-COMMENT ON COLUMN organizations_employees.id_employee IS '(DC2Type:uuid)';
-
-
---
 -- Name: organizations_categories; Type: TABLE; Schema: public
 --
 CREATE TABLE organizations_categories (
@@ -350,6 +336,20 @@ CREATE INDEX IDX_74DF8412E22F160E ON organizations_categories (id_organization);
 CREATE INDEX IDX_74DF8412D449934 ON organizations_categories (id_category);
 COMMENT ON COLUMN organizations_categories.id_organization IS '(DC2Type:uuid)';
 COMMENT ON COLUMN organizations_categories.id_category IS '(DC2Type:uuid)';
+
+
+--
+-- Name: organizations_employees; Type: TABLE; Schema: public
+--
+CREATE TABLE organizations_employees (
+    id_organization UUID NOT NULL,
+    id_employee UUID NOT NULL,
+    PRIMARY KEY(id_organization, id_employee)
+);
+CREATE INDEX IDX_92C3EDE2E22F160E ON organizations_employees (id_organization);
+CREATE INDEX IDX_92C3EDE2D449934 ON organizations_employees (id_employee);
+COMMENT ON COLUMN organizations_employees.id_organization IS '(DC2Type:uuid)';
+COMMENT ON COLUMN organizations_employees.id_employee IS '(DC2Type:uuid)';
 
 
 --
@@ -809,10 +809,10 @@ ALTER TABLE organization ADD CONSTRAINT FK_C1EE637CA9255C2F FOREIGN KEY (id_crea
 ALTER TABLE organization ADD CONSTRAINT FK_C1EE637CBC3B2E27 FOREIGN KEY (id_business_form) REFERENCES business_form (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE organization ADD CONSTRAINT FK_C1EE637C98A550B3 FOREIGN KEY (id_ownership) REFERENCES ownership (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE organization ADD CONSTRAINT FK_C1EE637C3810D62A FOREIGN KEY (id_taxation_type) REFERENCES taxation_type (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
-ALTER TABLE organizations_employees ADD CONSTRAINT FK_92C3EDE2E22F160E FOREIGN KEY (id_organization) REFERENCES organization (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
-ALTER TABLE organizations_employees ADD CONSTRAINT FK_92C3EDE2D449934 FOREIGN KEY (id_employee) REFERENCES employee (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE organizations_categories ADD CONSTRAINT FK_74DF8412E22F160E FOREIGN KEY (id_organization) REFERENCES organization (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE organizations_categories ADD CONSTRAINT FK_74DF8412D449934 FOREIGN KEY (id_category) REFERENCES category (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE organizations_employees ADD CONSTRAINT FK_92C3EDE2E22F160E FOREIGN KEY (id_organization) REFERENCES organization (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE organizations_employees ADD CONSTRAINT FK_92C3EDE2D449934 FOREIGN KEY (id_employee) REFERENCES employee (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE phone ADD CONSTRAINT FK_444F97DDD1E2629C FOREIGN KEY (id_customer) REFERENCES customer (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE region ADD CONSTRAINT FK_F62F1768DEE6016 FOREIGN KEY (id_country) REFERENCES country (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE groups_roles ADD CONSTRAINT FK_E79D4963834505F5 FOREIGN KEY (id_group) REFERENCES security_group (id) NOT DEFERRABLE INITIALLY IMMEDIATE;

@@ -62,4 +62,17 @@ public class User {
     public User() {
         this.dateCreatedAt = new Date();
     }
+
+    public void addSecurityGroup(SecurityGroup securityGroup) {
+        if (!this.securityGroups.contains(securityGroup)) {
+            this.securityGroups.add(securityGroup);
+            securityGroup.addUser(this);
+        }
+    }
+
+    public void removeSecurityGroup(SecurityGroup securityGroup) {
+        if (this.securityGroups.remove(securityGroup)) {
+            securityGroup.removeUser(this);
+        }
+    }
 }

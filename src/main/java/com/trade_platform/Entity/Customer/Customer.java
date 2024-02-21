@@ -87,4 +87,17 @@ public class Customer {
             phone.setCustomer(null);
         }
     }
+
+    public void addSecurityGroup(SecurityGroup securityGroup) {
+        if (!this.securityGroups.contains(securityGroup)) {
+            this.securityGroups.add(securityGroup);
+            securityGroup.addCustomer(this);
+        }
+    }
+
+    public void removeSecurityGroup(SecurityGroup securityGroup) {
+        if (this.securityGroups.remove(securityGroup)) {
+            securityGroup.removeCustomer(this);
+        }
+    }
 }
