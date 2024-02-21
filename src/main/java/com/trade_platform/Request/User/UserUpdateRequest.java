@@ -19,7 +19,7 @@ public class UserUpdateRequest {
     @Length(max = 255)
     private String password;
 
-    @Length(max = 255)
+    @Length(min = 2, max = 255)
     private String fullName;
 
     private List<@UUID String> securityGroupIds;

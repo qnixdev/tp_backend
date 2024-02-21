@@ -18,7 +18,7 @@ public class UserCreateRequest {
     private String password;
 
     @NotBlank
-    @Length(max = 255)
+    @Length(min = 2, max = 255)
     private String fullName;
 
     @NotEmpty
