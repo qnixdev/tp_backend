@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, UUID> {
-    @Query("SELECT COUNT(u.id) > 0 FROM User u WHERE u.email = :email")
+    @Query("SELECT COUNT(u.id) > 0 FROM User u WHERE LOWER(u.email) = :email")
     public boolean isExistUserByEmail(@Param("email") String email);
 
     public User getUserByEmail(String email);
