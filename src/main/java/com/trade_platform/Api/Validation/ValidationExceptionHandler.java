@@ -1,4 +1,4 @@
-package com.trade_platform.Controller;
+package com.trade_platform.Api.Validation;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

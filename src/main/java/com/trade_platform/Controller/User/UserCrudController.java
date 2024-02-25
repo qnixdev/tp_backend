@@ -2,7 +2,7 @@ package com.trade_platform.Controller.User;
 
 import com.trade_platform.Entity.User;
 import com.trade_platform.Request.User.*;
-import com.trade_platform.Service.User.UserCrudService;
+import com.trade_platform.Service.User.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,17 +11,22 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/user")
 public class UserCrudController {
-    private final UserCrudService userCrudService;
+    private final UserCreateService userCreateService;
 
     @Autowired
     public UserCrudController(
-        UserCrudService userCrudService
+        UserCreateService userCreateService
     ) {
-        this.userCrudService = userCrudService;
+        this.userCreateService = userCreateService;
     }
 
     @PutMapping
     public void create(@Valid @RequestBody UserCreateRequest request) {
+        try {
+            this.userCreateService.create(request, null);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
