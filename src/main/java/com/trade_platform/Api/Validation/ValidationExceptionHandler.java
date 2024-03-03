@@ -1,5 +1,6 @@
 package com.trade_platform.Api.Validation;
 
+import com.trade_platform.Controller.Api.ApiController;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +13,6 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ValidationExceptionHandler {
-    public static final String API_VALIDATION_EXCEPTION = "API_VALIDATION_EXCEPTION";
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handle(MethodArgumentNotValidException ex) {
         return ResponseEntity
@@ -23,8 +22,7 @@ public class ValidationExceptionHandler {
     }
 
     private Map<String, String> getErrors(MethodArgumentNotValidException ex) {
-        return ex
-            .getBindingResult()
+        return ex.getBindingResult()
             .getFieldErrors()
             .stream()
             .collect(Collectors.toMap(e -> this.toSnakeCase(e.getField()), FieldError::getDefaultMessage, (exist, next) -> exist))
@@ -40,11 +38,11 @@ public class ValidationExceptionHandler {
 
     @Getter
     private static class ErrorResponse {
-        private final String error = API_VALIDATION_EXCEPTION;
-        private final Map<String, String> fields;
+        private final String error = ApiController.API_ERROR_VALIDATION;
+        private final Map<String, String> message;
 
-        public ErrorResponse(Map<String, String> fields) {
-            this.fields = fields;
+        public ErrorResponse(Map<String, String> message) {
+            this.message = message;
         }
     }
 }

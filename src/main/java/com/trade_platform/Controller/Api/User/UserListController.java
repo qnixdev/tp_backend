@@ -1,5 +1,6 @@
-package com.trade_platform.Controller.User;
+package com.trade_platform.Controller.Api.User;
 
+import com.trade_platform.Controller.Api.ApiController;
 import com.trade_platform.Entity.User;
 import com.trade_platform.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
-public class UserListController {
+public class UserListController extends ApiController {
     private final UserRepository userRepository;
 
     @Autowired

@@ -1,9 +1,11 @@
-package com.trade_platform.Controller.User;
+package com.trade_platform.Controller.Api.User;
 
-import com.trade_platform.Controller.ApiController;
+import com.trade_platform.Controller.Api.ApiController;
 import com.trade_platform.Entity.User;
 import com.trade_platform.Request.User.*;
+import com.trade_platform.Service.Customer.Exception.CustomerAlreadyExistException;
 import com.trade_platform.Service.User.*;
+import com.trade_platform.Service.User.Exception.UserAlreadyExistException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +29,10 @@ public class UserCrudController extends ApiController {
             var user = this.userCreateService.create(request, null);
 
             return ResponseEntity.ok(user);
-        } catch (Exception ex) {
+        } catch (UserAlreadyExistException|CustomerAlreadyExistException ex) {
             return this.error(ex.getMessage(), ApiController.API_ERROR_ALREADY_EXISTS, HttpStatus.UNPROCESSABLE_ENTITY);
+        } catch (Exception ex) {
+            return this.error(ex.getMessage(), ApiController.API_ERROR_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -44,6 +48,6 @@ public class UserCrudController extends ApiController {
 
     @DeleteMapping
     public ResponseEntity<Object> delete(@Valid @RequestBody UserDeleteRequest request) {
-        return 
+        return ResponseEntity.noContent().build();
     }
 }

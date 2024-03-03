@@ -5,9 +5,13 @@ import com.trade_platform.Entity.Customer.Reference.*;
 import com.trade_platform.Entity.Enum.Status;
 import com.trade_platform.Entity.Organization.Organization;
 import com.trade_platform.Entity.SecurityGroup;
+import com.trade_platform.Entity.SecurityRole;
 import com.trade_platform.Entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import java.util.*;
 
 @AllArgsConstructor
@@ -15,7 +19,7 @@ import java.util.*;
 @Data
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer implements UserDetails {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -102,5 +106,41 @@ public class Customer {
         if (this.securityGroups.remove(securityGroup)) {
             securityGroup.removeCustomer(this);
         }
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.getSecurityGroups()
+            .stream()
+            .flatMap(sg -> sg.getSecurityRoles().stream())
+            .map(SecurityRole::getRole)
+            .map(SimpleGrantedAuthority::new)
+            .toList()
+        ;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
