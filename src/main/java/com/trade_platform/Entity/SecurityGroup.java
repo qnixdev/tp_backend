@@ -1,5 +1,7 @@
 package com.trade_platform.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.trade_platform.Entity.Customer.Customer;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,6 +27,7 @@ public class SecurityGroup {
     @Column(name = "name", length = 63, nullable = false)
     private String name;
 
+    @JsonManagedReference
     @ManyToMany(targetEntity = SecurityRole.class)
     @JoinTable(
         name = "groups_roles",
@@ -33,9 +36,11 @@ public class SecurityGroup {
     )
     private Set<SecurityRole> securityRoles;
 
+    @JsonBackReference
     @ManyToMany(targetEntity = Customer.class, mappedBy = "securityGroups")
     private Set<Customer> customers;
 
+    @JsonBackReference
     @ManyToMany(targetEntity = User.class, mappedBy = "securityGroups")
     private Set<User> users;
 

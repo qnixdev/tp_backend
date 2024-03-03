@@ -1,5 +1,6 @@
 package com.trade_platform.Entity.Customer;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.trade_platform.Entity.Customer.Reference.*;
 import com.trade_platform.Entity.Enum.Status;
 import com.trade_platform.Entity.Organization.Organization;
@@ -62,6 +63,7 @@ public class Customer {
     @OneToMany(targetEntity = Phone.class, mappedBy = "customer", orphanRemoval = true)
     private List<Phone> phones;
 
+    @JsonManagedReference
     @ManyToMany(targetEntity = SecurityGroup.class)
     @JoinTable(
         name = "customers_security_groups",

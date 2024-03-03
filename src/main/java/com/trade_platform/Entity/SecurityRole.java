@@ -1,5 +1,6 @@
 package com.trade_platform.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;
@@ -21,6 +22,7 @@ public class SecurityRole {
     @Column(name = "slug", length = 63, nullable = false)
     private String slug;
 
+    @JsonBackReference
     @ManyToMany(targetEntity = SecurityGroup.class, mappedBy = "securityRoles")
     private Set<SecurityGroup> securityGroups;
 

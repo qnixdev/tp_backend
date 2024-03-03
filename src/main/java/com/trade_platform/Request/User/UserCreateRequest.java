@@ -3,14 +3,14 @@ package com.trade_platform.Request.User;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UUID;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 public class UserCreateRequest {
     @Email
     @NotBlank
-    @Length(max = 255)
+    @Length(min = 5, max = 255)
     private String email;
 
     @NotBlank
@@ -22,5 +22,5 @@ public class UserCreateRequest {
     private String fullName;
 
     @NotEmpty
-    private List<@UUID String> securityGroupIds;
+    private List<UUID> securityGroupIds;
 }

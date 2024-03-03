@@ -1,5 +1,6 @@
 package com.trade_platform.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.trade_platform.Entity.Enum.Status;
 import jakarta.persistence.*;
 import lombok.*;
@@ -51,6 +52,7 @@ public class User {
     @Column(name = "date_deleted_at")
     private Date dateDeletedAt;
 
+    @JsonManagedReference
     @ManyToMany(targetEntity = SecurityGroup.class)
     @JoinTable(
         name = "users_security_groups",
