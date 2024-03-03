@@ -61,6 +61,7 @@ public class User {
 
     public User() {
         this.dateCreatedAt = new Date();
+        this.securityGroups = new HashSet<>();
     }
 
     public void addSecurityGroup(SecurityGroup securityGroup) {

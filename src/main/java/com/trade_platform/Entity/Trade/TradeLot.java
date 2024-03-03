@@ -68,8 +68,8 @@ public class TradeLot {
     private TradeLotBet bestBet = null;
 
     public TradeLot() {
-        this.bets = new ArrayList<>();
         this.positions = new ArrayList<>();
+        this.bets = new ArrayList<>();
     }
 
     public void addTradeLotBet(TradeLotBet bet) {

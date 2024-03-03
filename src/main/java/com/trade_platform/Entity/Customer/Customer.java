@@ -73,6 +73,7 @@ public class Customer {
     public Customer() {
         this.dateCreatedAt = new Date();
         this.phones = new ArrayList<>();
+        this.securityGroups = new HashSet<>();
     }
 
     public void addPhone(Phone phone) {

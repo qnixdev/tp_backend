@@ -18,7 +18,7 @@ public class TradeLotPosition {
     private UUID id;
 
     @ManyToOne(targetEntity = TradeLot.class)
-    @JoinColumn(name = "id_trade", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_lot", referencedColumnName = "id", nullable = false)
     private TradeLot lot;
 
     @Column(name = "name", nullable = false)

@@ -139,6 +139,7 @@ public class Trade {
         this.dateCreatedAt = new Date();
         this.lots = new ArrayList<>();
         this.requests = new ArrayList<>();
+        this.participants = new HashSet<>();
     }
 
     public void addTradeLot(TradeLot lot) {

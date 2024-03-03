@@ -2,11 +2,9 @@ package com.trade_platform.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Data
 @Entity
@@ -25,6 +23,10 @@ public class SecurityRole {
 
     @ManyToMany(targetEntity = SecurityGroup.class, mappedBy = "securityRoles")
     private Set<SecurityGroup> securityGroups;
+
+    public SecurityRole() {
+        this.securityGroups = new HashSet<>();
+    }
 
     public void addSecurityGroup(SecurityGroup securityGroup) {
         this.securityGroups.add(securityGroup);

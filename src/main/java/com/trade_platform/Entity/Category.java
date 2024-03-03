@@ -5,12 +5,9 @@ import com.trade_platform.Entity.Organization.Organization;
 import com.trade_platform.Service.Converter.CategoryTypeConverter;
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.Date;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Data
 @Entity
@@ -43,16 +40,16 @@ public class Category {
     @ManyToMany(targetEntity = Organization.class, mappedBy = "categories")
     private Set<Organization> organizations;
 
+    public Category() {
+        this.dateCreatedAt = new Date();
+        this.organizations = new HashSet<>();
+    }
+
     public void addOrganization(Organization organization) {
         this.organizations.add(organization);
     }
 
     public void removeOrganization(Organization organization) {
         this.organizations.remove(organization);
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.dateCreatedAt = new Date();
     }
 }

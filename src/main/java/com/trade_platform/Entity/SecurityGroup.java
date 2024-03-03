@@ -3,11 +3,9 @@ package com.trade_platform.Entity;
 import com.trade_platform.Entity.Customer.Customer;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.*;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Data
 @Entity
@@ -40,6 +38,12 @@ public class SecurityGroup {
 
     @ManyToMany(targetEntity = User.class, mappedBy = "securityGroups")
     private Set<User> users;
+
+    public SecurityGroup() {
+        this.securityRoles = new HashSet<>();
+        this.customers = new HashSet<>();
+        this.users = new HashSet<>();
+    }
 
     public void addSecurityRole(SecurityRole securityRole) {
         if (!this.securityRoles.contains(securityRole)) {

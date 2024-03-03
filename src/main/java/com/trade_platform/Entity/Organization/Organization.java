@@ -107,6 +107,9 @@ public class Organization {
         this.customers = new ArrayList<>();
         this.addresses = new ArrayList<>();
         this.bankInfoList = new ArrayList<>();
+        this.employees = new HashSet<>();
+        this.categories = new HashSet<>();
+        this.trades = new HashSet<>();
     }
 
     public void addCustomer(Customer customer) {

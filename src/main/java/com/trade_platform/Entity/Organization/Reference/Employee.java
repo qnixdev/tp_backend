@@ -3,12 +3,9 @@ package com.trade_platform.Entity.Organization.Reference;
 import com.trade_platform.Entity.Organization.Organization;
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.Date;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Data
 @Entity
@@ -42,6 +39,10 @@ public class Employee {
 
     @ManyToMany(targetEntity = Organization.class, mappedBy = "employees")
     private Set<Organization> organizations;
+
+    public Employee() {
+        this.organizations = new HashSet<>();
+    }
 
     public void addOrganization(Organization organization) {
         this.organizations.add(organization);
