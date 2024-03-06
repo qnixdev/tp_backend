@@ -14,7 +14,7 @@ public interface CustomerRepository extends CrudRepository<Customer, UUID> {
 
     public Customer getCustomerByEmail(String email);
 
-    public Customer getUserByEmailAndPassword(String email, String password);
+    public Customer getCustomerByEmailAndPassword(String email, String password);
 
     public Customer getCustomerByApiToken(String apiToken);
 }

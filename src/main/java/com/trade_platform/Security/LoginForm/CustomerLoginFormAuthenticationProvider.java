@@ -29,7 +29,7 @@ public class CustomerLoginFormAuthenticationProvider implements AuthenticationPr
         String email = authentication.getName().toLowerCase();
         String password = authentication.getCredentials().toString();
 
-        var existCustomer = this.customerRepository.getUserByEmailAndPassword(
+        var existCustomer = this.customerRepository.getCustomerByEmailAndPassword(
             email,
             this.passwordEncoder.encode(password)
         );

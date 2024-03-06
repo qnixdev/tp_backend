@@ -11,18 +11,18 @@ public class ApiKeyAuthenticationToken extends AbstractAuthenticationToken {
     public ApiKeyAuthenticationToken(String apiKey, boolean authenticated) {
         super(AuthorityUtils.NO_AUTHORITIES);
         this.apiKey = apiKey;
-        setAuthenticated(authenticated);
+        this.setAuthenticated(authenticated);
     }
 
     public ApiKeyAuthenticationToken(String apiKey) {
         super(AuthorityUtils.NO_AUTHORITIES);
         this.apiKey = apiKey;
-        setAuthenticated(false);
+        this.setAuthenticated(false);
     }
 
     public ApiKeyAuthenticationToken() {
         super(AuthorityUtils.NO_AUTHORITIES);
-        setAuthenticated(false);
+        this.setAuthenticated(false);
     }
 
     @Override

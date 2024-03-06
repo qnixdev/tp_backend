@@ -2,6 +2,8 @@ package com.trade_platform.Security.ApiKey;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +17,7 @@ import java.util.Optional;
 public class ApiKeyAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
     private static final String AUTH_TOKEN_HEADER_NAME = "token";
 
-    protected ApiKeyAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public ApiKeyAuthenticationFilter(AuthenticationManager authenticationManager) {
         super("/**");
         this.setAuthenticationManager(authenticationManager);
     }

@@ -15,11 +15,12 @@ public class ApiKeyAuthenticationProvider implements AuthenticationProvider {
         if (ObjectUtils.isEmpty(apiKey)) {
             throw new InsufficientAuthenticationException("API key can't by empty!");
         } else {
+            //TODO: search api key
             if ("ValidApiKey".equals(apiKey)) {
                 return new ApiKeyAuthenticationToken(apiKey, true);
             }
 
-            throw new BadCredentialsException("API Key is invalid!");
+            throw new BadCredentialsException("API key is invalid!");
         }
     }
 
